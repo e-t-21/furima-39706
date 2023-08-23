@@ -28,8 +28,8 @@
 | category_id    | integer    | null: false                    |
 | item_status_id | integer    | null: false                    | 
 | del_price_id   | integer    | null: false                    |
-| sender_area_id | integer    | null: false                    |  
-| del_days_id    | integer    | null: false                    |  
+| perfectue_id   | integer    | null: false                    |  
+| del_day_id     | integer    | null: false                    |  
 | user           | references | null: false, foreign_key: true |  
 
 ### Association
@@ -42,7 +42,7 @@
 | Column            | Type       | Options                        | 
 | ----------------- | ---------- | ------------------------------ | 
 | post_code         | string     | null: false                    | 
-| perfectue         | string     | null: false                    | 
+| perfectue_id      | integer    | null: false                    | 
 | city_town_village | string     | null: false                    | 
 | street_address    | string     | null: false                    | 
 | building_name     | string     |                                | 
