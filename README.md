@@ -28,8 +28,8 @@
 | category_id    | integer    | null: false                    |
 | item_status_id | integer    | null: false                    | 
 | del_price_id   | integer    | null: false                    |
-| sender_area_id | integer    | null: false                    |  
-| del_days_id    | integer    | null: false                    |  
+| perfectue_id   | integer    | null: false                    |  
+| del_day_id     | integer    | null: false                    |  
 | user           | references | null: false, foreign_key: true |  
 
 ### Association
