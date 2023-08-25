@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  validates :nickname, :email, :date_of_birth, :family_name, :first_name, :family_name_kana, :first_name_kana, presence: true
+  validates :nickname, :date_of_birth, :family_name, :first_name, :family_name_kana, :first_name_kana, presence: true
 
   validate :family_name_format
   def family_name_format
@@ -31,13 +31,14 @@ class User < ApplicationRecord
 
   validate :password_complexity
   def password_complexity
-    return unless password.present? && !password.match(/^(?=.*[a-zA-Z])(?=.*[0-9])/)
+    return unless password.present? && (!password.match(/^(?=.*[a-zA-Z])(?=.*[0-9])/) || password.include?("-"))
 
     errors.add :password, 'is invalid. Include both letters and numbers'
   end
 
-  has_many :items
-  has_many :orders
+  #has_many :items
+  #has_many :orders
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
