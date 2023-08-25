@@ -40,8 +40,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_070937) do
   end
 
   create_table "items", charset: "utf8", force: :cascade do |t|
+    t.string "item_name", null: false
+    t.integer "price", null: false
+    t.text "message", null: false
+    t.integer "category_id", null: false
+    t.integer "item_status_id", null: false
+    t.integer "del_price_id", null: false
+    t.integer "perfectue_id", null: false
+    t.integer "del_day_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "users", charset: "utf8", force: :cascade do |t|
@@ -52,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_070937) do
     t.string "first_name", default: "", null: false
     t.string "family_name_kana", default: "", null: false
     t.string "first_name_kana", default: "", null: false
-    t.date "date_of_birth"
+    t.date "date_of_birth", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -64,4 +74,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_070937) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "items", "users"
 end
