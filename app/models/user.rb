@@ -31,13 +31,13 @@ class User < ApplicationRecord
 
   validate :password_complexity
   def password_complexity
-    return unless password.present? && (!password.match(/^(?=.*[a-zA-Z])(?=.*[0-9])/) || password.include?("-"))
+    return unless password.present? && (!password.match(/^(?=.*[a-zA-Z])(?=.*[0-9])/) || password.include?('-'))
 
     errors.add :password, 'is invalid. Include both letters and numbers'
   end
 
-  #has_many :items
-  #has_many :orders
+  # has_many :items
+  # has_many :orders
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
