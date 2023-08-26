@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to '/'
     else
-      render :new
+      render 'items/new', status: :unprocessable_entity
     end
   end
 
