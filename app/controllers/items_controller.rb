@@ -1,7 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new]
+  before_action :authenticate_user!
 
   def index
+  #  @items = @item.includes(:user)
   end
 
   def new
@@ -13,6 +14,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to '/'
     else
+      @items = Item.includes(:user)
       render 'items/new', status: :unprocessable_entity
     end
   end
