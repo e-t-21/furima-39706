@@ -20,12 +20,18 @@ class Item < ApplicationRecord
   validates :perfectue_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :del_day_id, numericality: { other_than: 1, message: "can't be blank" }
 
-
-
+  validate :check_price_range
 
   private
 
   def was_attached?
     self.image.attached?
   end
+
+  def check_price_range
+    if price.present? && (price < 300 || price > 9999999)
+      errors.add(:price, "is out of setting range")
+    end
+  end
+
 end
