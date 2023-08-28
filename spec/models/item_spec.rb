@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe Item, type: :model do
-  it "ユーザー情報の生成" do
+  it 'ユーザー情報の生成' do
     user = FactoryBot.create(:user)
   end
   before do
@@ -9,7 +9,7 @@ RSpec.describe Item, type: :model do
 
   describe '商品出品' do
     context '商品出品できる場合' do
-      it "必要な情報を適切に入力すれば出品できる" do
+      it '必要な情報を適切に入力すれば出品できる' do
         expect(@item).to be_valid
       end
     end
@@ -62,13 +62,13 @@ RSpec.describe Item, type: :model do
       it '販売価格が10000000以降だと登録できない' do
         @item.price = '10000000'
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price is out of setting range"
+        expect(@item.errors.full_messages).to include 'Price is out of setting range'
       end
       it '販売価格が299以下だと登録できない' do
         @item.price = '299'
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price is out of setting range"
+        expect(@item.errors.full_messages).to include 'Price is out of setting range'
       end
-      end
+    end
   end
 end

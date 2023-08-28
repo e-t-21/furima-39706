@@ -1,5 +1,4 @@
 class Item < ApplicationRecord
-
   belongs_to :user
   has_one_attached :image
 
@@ -26,7 +25,7 @@ class Item < ApplicationRecord
   private
 
   def was_attached?
-    self.image.attached?
+    image.attached?
   end
 
   def price_format
@@ -36,8 +35,8 @@ class Item < ApplicationRecord
   end
 
   def check_price_range
-    if price.present? && (price < 300 || price > 9999999)
-      errors.add(:price, "is out of setting range")
-    end
+    return unless price.present? && (price < 300 || price > 9_999_999)
+
+    errors.add(:price, 'is out of setting range')
   end
 end
