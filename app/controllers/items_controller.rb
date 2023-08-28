@@ -14,8 +14,8 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to '/'
     else
-      @items = Item.includes(:user)
-      render 'items/new', status: :unprocessable_entity
+     # @items = Item.includes(:user)
+      render 'new', status: :unprocessable_entity
     end
   end
 
