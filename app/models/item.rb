@@ -19,19 +19,12 @@ class Item < ApplicationRecord
   validates :del_day_id, numericality: { other_than: 1, message: "can't be blank" }
 
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validate :price_format
   validate :check_price_range
 
   private
 
   def was_attached?
     image.attached?
-  end
-
-  def price_format
-    return if price.to_s.match?(/\A\d+\z/)
-
-    errors.add :price, 'is invalid. Input half-width characters'
   end
 
   def check_price_range
