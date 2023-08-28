@@ -36,7 +36,7 @@ class User < ApplicationRecord
     errors.add :password, 'is invalid. Include both letters and numbers'
   end
 
-  # has_many :items
+  has_many :items
   # has_many :orders
 
   # Include default devise modules. Others available are:
