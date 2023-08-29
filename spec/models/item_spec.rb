@@ -56,7 +56,7 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include "Price can't be blank"
       end
-      it '販売価格が10000000以降だと登録できない' do
+      it '販売価格が10000000以上だと登録できない' do
         @item.price = '10000000'
         @item.valid?
         expect(@item.errors.full_messages).to include 'Price is out of setting range'
