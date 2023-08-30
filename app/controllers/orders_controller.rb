@@ -5,9 +5,6 @@ class OrdersController < ApplicationController
     @item = Item.find(params[:item_id])
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order = Order.new
-  end
-
-  def new
     @order_address = OrderAddress.new
   end
 
@@ -18,14 +15,16 @@ class OrdersController < ApplicationController
       @order_address.save
       redirect_to root_path
     else
-      render :new, status: unprocessable_entity
+      @item = Item.find(params[:item_id])
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
+      render :index, status: 422
     end
   end
 
   private
 
   def order_params
-    params.require(:order_address).permit(:post_code, :prefecture, :city_town_village, :street_number, :building_name, :phone, :order_id).merge(user_id: current_user.id)
+    params.require(:order_address).permit(:user_id, :item_id, :post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone, :order_id).merge(user_id: current_user.id)
   end
 
   def pay_item
