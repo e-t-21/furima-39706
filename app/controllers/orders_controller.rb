@@ -23,20 +23,17 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_address).permit(:post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone, :order_id).merge(user_id: current_user.id, item_id: params[:item_id])
-    #params.require(:comment).permit(:text).merge(user_id: current_user.id, tweet_id: params[:tweet_id])の記述を参考にする↑item_id
+    params.require(:order_address).permit(:post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone, :order_id).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: order_params[:@item.price],#@itemを使う
+      amount: @item.price,
       card: order_params[:token],
       currency: 'jpy'
     )
   end
-
-  private
 
   def set_item
     @item = Item.find(params[:item_id])
