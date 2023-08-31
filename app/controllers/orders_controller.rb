@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, except: :index
+  before_action :set_item, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order = Order.new
     @order_address = OrderAddress.new
@@ -15,7 +15,6 @@ class OrdersController < ApplicationController
       @order_address.save
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])#ひとまとめにすること
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       render :index, status: 422
     end
@@ -24,17 +23,23 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_address).permit(:post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone, :order_id).merge(user_id: current_user.id)
+    params.require(:order_address).permit(:post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone, :order_id).merge(user_id: current_user.id, item_id: params[:item_id])
     #params.require(:comment).permit(:text).merge(user_id: current_user.id, tweet_id: params[:tweet_id])の記述を参考にする↑item_id
   end
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: order_params[:price],#@itemを使う
+      amount: order_params[:@item.price],#@itemを使う
       card: order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  private
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
 end

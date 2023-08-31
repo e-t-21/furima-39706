@@ -4,12 +4,10 @@ class OrderAddress
   attr_accessor :user_id, :item_id, :post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone, :order_id
 
   with_options presence: true do
+    validates :post_code, presence: true, format: {with: /\A\d{3}-\d{4}\z/, message: "is invalid. Include hyphen(-)"}
+    validates :perfectue_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :user_id
     validates :item_id
-    validates :order_id
-
-    validates :post_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
-    validates :perfectue_id, numericality: { other_than: 1, message: "can't be blank" }
   end
   validates :city_town_village, :street_address, :phone, presence: true
 
