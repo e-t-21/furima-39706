@@ -1,8 +1,8 @@
 require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   before do
-    @user_id = '1'
-    @item_id = '1'
+    @user_id = FactoryBot.build(:user)
+    @item_id = FactoryBot.build(:item)
     @order_address = FactoryBot.build(:order_address, user_id: @user_id, item_id: @item_id)
   end
 
@@ -40,7 +40,7 @@ RSpec.describe OrderAddress, type: :model do
     end
 
     it '都道府県が空だと購入できない' do
-      @order_address.perfectue_id = nil
+      @order_address.perfectue_id = '1'
       @order_address.valid?
       expect(@order_address.errors.full_messages).to include("Perfectue can't be blank")
     end
