@@ -1,8 +1,9 @@
 require 'rails_helper'
-
 RSpec.describe OrderAddress, type: :model do
   before do
-    @order_address = FactoryBot.build(:order_address)
+    @user_id = '1'
+    @item_id = '1'
+    @order_address = FactoryBot.build(:order_address, user_id: @user_id, item_id: @item_id)
   end
 
   context '内容に問題ない場合' do
@@ -64,7 +65,7 @@ RSpec.describe OrderAddress, type: :model do
     it '電話番号が９文字以下だと購入できない' do
       @order_address.phone = '123456'
       @order_address.valid?
-      expect(@order_address.errors.full_messages).to include('Phone number is too short')
+      expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input 10-11 digits')
     end
     it '電話番号にハイフン（-）を含んでいると購入できない' do
       @order_address.phone = '080-1234-5678'

@@ -3,14 +3,10 @@ class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
 
   def index
+    redirect_to root_path if Order.exists?(item_id: @item.id) || current_user == @item.user
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Order.new
     @order_address = OrderAddress.new
-    if Order.exists?(item_id: @item.id)
-      redirect_to root_path
-    elsif current_user == @item.user
-      redirect_to root_path
-    end
   end
 
   def create

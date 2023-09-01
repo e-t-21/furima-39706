@@ -7,7 +7,5 @@ FactoryBot.define do
     street_address { '神泉1-22-3' }
     building_name { 'アジアビル9F' }
     phone { '09012345678' }
-    item_id { Faker::Number.rand_in_range(10, 99) }
-    user_id { Faker::Number.rand_in_range(10, 99) }
   end
 end
