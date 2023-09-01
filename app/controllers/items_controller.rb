@@ -2,9 +2,9 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :set_order, only: [:index, :show]
+  before_action :set_item_all_order, only: [:index, :show]
 
   def index
-    @items = Item.all.order('created_at DESC')
   end
 
   def new
@@ -21,7 +21,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @items = Item.all.order('created_at DESC')
     @user = User.find_by(id: @item.user_id)
   end
 
@@ -62,5 +61,9 @@ class ItemsController < ApplicationController
 
   def set_order
     @orders = Order.all
+  end
+
+  def set_item_all_order
+    @items = Item.all.order('created_at DESC')
   end
 end
