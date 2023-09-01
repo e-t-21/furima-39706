@@ -9,14 +9,10 @@ class OrderAddress
     validates :user_id
     validates :item_id
   end
-  validates :city_town_village, :street_address, :phone, presence: true
-
-  def phone_format
-    return if phone.match?(/\A\d{10,11}\z/)
-
-
-    errors.add :phone, 'is invalid. Input only number'
-  end
+  validates :city_town_village, :street_address, presence: true
+  validates :phone, presence: { message: "number can't be blank" }
+  validates :phone, length: { minimum: 10, message: "number is too short" }
+  validates :phone, format: { with: /\A\d+\z/, message: "number is invalid. Input only number" }
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
