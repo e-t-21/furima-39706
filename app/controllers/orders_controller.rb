@@ -3,10 +3,14 @@ class OrdersController < ApplicationController
   before_action :set_item, only: [:index, :create]
 
   def index
-    redirect_to root_path if Order.exists?(item_id: @item.id) || current_user == @item.user
     gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @order = Order.new
     @order_address = OrderAddress.new
+    if Order.exists?(item_id: @item.id)
+      redirect_to root_path
+    elsif current_user == @item.user
+      redirect_to root_path
+    end
   end
 
   def create
@@ -24,7 +28,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order_address).permit(:post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone).merge(
+    params.require(:order_address).permit(:post_code, :perfectue_id, :city_town_village, :street_address, :building_name, :phone, :order_id).merge(
       user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
   end
