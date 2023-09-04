@@ -36,4 +36,6 @@ local:
 amazon:
   service: S3
   region: ap-northeast-1
- bucket: test-furima-39706
+  bucket: test-furima-39706
+  access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+  secret_access_key:  <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
